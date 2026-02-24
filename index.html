@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Logistics - Track Your Shipments</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" width="32" height="32">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+                Modern Logistics
+            </div>
+            <ul class="nav-links">
+                <li><a href="#track">Track</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#shipments">Shipments</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Search Bar -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Track Your Shipment in Real-Time</h1>
+            <p class="hero-subtitle">Fast, Reliable, and Transparent Logistics Solutions</p>
+            
+            <div class="search-container" id="track">
+                <div class="search-wrapper">
+                    <input 
+                        type="text" 
+                        id="trackingInput" 
+                        class="search-input" 
+                        placeholder="Enter tracking ID (e.g., SHIP-2024)"
+                        autocomplete="off"
+                    >
+                    <button class="search-button">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Stepper (Hidden until search) -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <h2>Shipment Status</h2>
+                <div class="progress-stepper">
+                    <div class="step-item" data-step="ordered">
+                        <div class="step-circle">
+                            <svg class="checkmark" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                            </svg>
+                            <span class="step-number">1</span>
+                        </div>
+                        <p class="step-label">Ordered</p>
+                        <p class="step-date" id="date-ordered"></p>
+                    </div>
+
+                    <div class="step-item" data-step="processed">
+                        <div class="step-circle">
+                            <svg class="checkmark" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                            </svg>
+                            <span class="step-number">2</span>
+                        </div>
+                        <p class="step-label">Processed</p>
+                        <p class="step-date" id="date-processed"></p>
+                    </div>
+
+                    <div class="step-item" data-step="in-transit">
+                        <div class="step-circle">
+                            <svg class="checkmark" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                            </svg>
+                            <span class="step-number">3</span>
+                        </div>
+                        <p class="step-label">In Transit</p>
+                        <p class="step-date" id="date-in-transit"></p>
+                    </div>
+
+                    <div class="step-item" data-step="out-for-delivery">
+                        <div class="step-circle">
+                            <svg class="checkmark" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                            </svg>
+                            <span class="step-number">4</span>
+                        </div>
+                        <p class="step-label">Out for Delivery</p>
+                        <p class="step-date" id="date-out-for-delivery"></p>
+                    </div>
+
+                    <div class="step-item" data-step="delivered">
+                        <div class="step-circle">
+                            <svg class="checkmark" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                            </svg>
+                            <span class="step-number">5</span>
+                        </div>
+                        <p class="step-label">Delivered</p>
+                        <p class="step-date" id="date-delivered"></p>
+                    </div>
+                </div>
+                <div class="shipment-details" id="shipmentDetails"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Premium Logistics Solutions Tailored for You</p>
+            
+            <div class="services-grid">
+                <!-- Air Freight -->
+                <div class="service-card">
+                    <div class="service-icon air">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+                        </svg>
+                    </div>
+                    <h3>Air Freight</h3>
+                    <p>Express international shipping with priority handling. Fastest delivery option for time-sensitive cargo.</p>
+                    <span class="service-badge">24-48 Hours</span>
+                </div>
+
+                <!-- Sea Freight -->
+                <div class="service-card">
+                    <div class="service-icon sea">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 21H3v-2h1V9c0-.55.45-1 1-1h1V7c0-.55.45-1 1-1h1c.55 0 1-.45 1-1V3c0-.55.45-1 1-1h4c.55 0 1 .45 1 1v2c0 .55.45 1 1 1h1c.55 0 1 .45 1 1v2h1c.55 0 1 .45 1 1v10h1v2zm-10-5h6v-2h-6v2z"/>
+                        </svg>
+                    </div>
+                    <h3>Sea Freight</h3>
+                    <p>Cost-effective ocean shipping for bulk cargo. Perfect for heavy items and large-volume shipments.</p>
+                    <span class="service-badge">7-14 Days</span>
+                </div>
+
+                <!-- Land Freight -->
+                <div class="service-card">
+                    <div class="service-icon land">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M18 18.5a1.5 1.5 0 01-1.5-1.5 1.5 1.5 0 011.5-1.5 1.5 1.5 0 011.5 1.5 1.5 1.5 0 01-1.5 1.5m1.5-9l2 3H17V9.5M6 18.5a1.5 1.5 0 01-1.5-1.5 1.5 1.5 0 011.5-1.5 1.5 1.5 0 011.5 1.5 1.5 1.5 0 01-1.5 1.5m12-10h-8V4h8v4.5M4 5h8v10H4V5m16 14H2v2h18v-2z"/>
+                        </svg>
+                    </div>
+                    <h3>Land Freight</h3>
+                    <p>Reliable ground transportation across regions. Flexible scheduling and door-to-door delivery services.</p>
+                    <span class="service-badge">3-7 Days</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shipping Rate Calculator -->
+    <section class="calculator" id="calculator">
+        <div class="container">
+            <h2 class="section-title">Shipping Rate Calculator</h2>
+            <p class="section-subtitle">Get instant quotes based on weight and distance</p>
+            
+            <div class="calculator-wrapper">
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label for="weight">Package Weight (kg)</label>
+                        <input type="number" id="weight" placeholder="Enter weight" min="0.1" step="0.1" value="10">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="distance">Shipping Distance (km)</label>
+                        <input type="number" id="distance" placeholder="Enter distance" min="1" step="1" value="500">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="serviceType">Service Type</label>
+                        <select id="serviceType">
+                            <option value="land" selected>Land Freight</option>
+                            <option value="sea">Sea Freight</option>
+                            <option value="air">Air Freight</option>
+                        </select>
+                    </div>
+
+                    <button class="calculate-button" id="calculateBtn">Calculate Rate</button>
+                </div>
+
+                <!-- Rate Result -->
+                <div class="rate-result" id="rateResult" style="display: none;">
+                    <div class="result-card">
+                        <h3>Estimated Shipping Cost</h3>
+                        <div class="rate-breakdown">
+                            <div class="breakdown-item">
+                                <span>Base Rate:</span>
+                                <span id="baseRate">$0.00</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Weight Charge:</span>
+                                <span id="weightCharge">$0.00</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Distance Charge:</span>
+                                <span id="distanceCharge">$0.00</span>
+                            </div>
+                            <div class="breakdown-item total">
+                                <span>Total:</span>
+                                <span id="totalRate">$0.00</span>
+                            </div>
+                        </div>
+                        <p class="delivery-estimate" id="deliveryEstimate"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-Time Shipment Log -->
+    <section class="shipments" id="shipments">
+        <div class="container">
+            <h2 class="section-title">Real-Time Shipment Log</h2>
+            <p class="section-subtitle">All active and recent shipments</p>
+            
+            <div class="table-wrapper">
+                <table class="shipment-table">
+                    <thead>
+                        <tr>
+                            <th>Tracking ID</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Weight</th>
+                            <th>Service</th>
+                            <th>Status</th>
+                            <th>ETA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shipmentTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Us</h4>
+                    <p>Modern Logistics provides cutting-edge shipping solutions worldwide.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#track">Track Shipment</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#calculator">Calculator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: deliveryexpress1765@gmail.com</p>
+                    
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Modern Logistics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
